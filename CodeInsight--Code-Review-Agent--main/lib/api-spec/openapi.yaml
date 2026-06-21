@@ -1,0 +1,649 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: Code Insight API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: reviews
+    description: Code review operations
+  - name: dashboard
+    description: Dashboard summary operations
+  - name: fixes
+    description: AutoFix operations
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /reviews:
+    get:
+      operationId: listReviews
+      tags: [reviews]
+      summary: List all reviews for the current user
+      security:
+        - clerkAuth: []
+      responses:
+        "200":
+          description: List of code reviews
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+    post:
+      operationId: createReview
+      tags: [reviews]
+      summary: Submit a new code review job
+      security:
+        - clerkAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateReviewBody"
+      responses:
+        "201":
+          description: Review job created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+  /reviews/{id}:
+    get:
+      operationId: getReview
+      tags: [reviews]
+      summary: Get a specific review with issues
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Review with issues
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReviewWithIssues"
+        "404":
+          description: Review not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /reviews/{id}/cancel:
+    post:
+      operationId: cancelReview
+      tags: [reviews]
+      summary: Cancel an in-progress review
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Review cancelled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Review"
+
+  /reviews/{id}/patch:
+    get:
+      operationId: getReviewPatch
+      tags: [reviews]
+      summary: Download the patch file for a review
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Patch file content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PatchResponse"
+
+  /reviews/{id}/fixes:
+    get:
+      operationId: listFixes
+      tags: [fixes]
+      summary: List fix snapshots for a review
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of fix snapshots
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/FixSnapshot"
+    post:
+      operationId: applyFix
+      tags: [fixes]
+      summary: Apply a validated fix for an issue
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ApplyFixBody"
+      responses:
+        "201":
+          description: Fix applied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ApplyFixResponse"
+        "409":
+          description: Fix already applied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "422":
+          description: Validation failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /reviews/{id}/fixes/{snapshotId}:
+    delete:
+      operationId: revertFix
+      tags: [fixes]
+      summary: Revert an applied fix
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: snapshotId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Fix reverted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RevertFixResponse"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Get dashboard summary stats
+      security:
+        - clerkAuth: []
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
+  /dashboard/recent-activity:
+    get:
+      operationId: getRecentActivity
+      tags: [dashboard]
+      summary: Get recent review activity feed
+      security:
+        - clerkAuth: []
+      responses:
+        "200":
+          description: Recent activity
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ActivityItem"
+
+  /github/repo-info:
+    get:
+      operationId: getGithubRepoInfo
+      tags: [reviews]
+      summary: Fetch GitHub repo metadata
+      security:
+        - clerkAuth: []
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Repo metadata
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GithubRepoInfo"
+        "400":
+          description: Invalid URL
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    clerkAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        repoUrl:
+          type: string
+          nullable: true
+        repoName:
+          type: string
+          nullable: true
+        repoType:
+          type: string
+          enum: [github, git_url, zip]
+        prUrl:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [queued, processing, completed, failed, cancelled]
+        healthScore:
+          type: number
+          nullable: true
+        totalIssues:
+          type: integer
+          nullable: true
+        criticalIssues:
+          type: integer
+          nullable: true
+        fileCount:
+          type: integer
+          nullable: true
+        linesAnalyzed:
+          type: integer
+          nullable: true
+        currentStep:
+          type: string
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+        scoresSecurity:
+          type: number
+          nullable: true
+        scoresMaintainability:
+          type: number
+          nullable: true
+        scoresComplexity:
+          type: number
+          nullable: true
+        scoresDuplication:
+          type: number
+          nullable: true
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+      required:
+        - id
+        - userId
+        - repoType
+        - status
+        - createdAt
+        - updatedAt
+
+    Issue:
+      type: object
+      properties:
+        id:
+          type: string
+        reviewId:
+          type: string
+        category:
+          type: string
+          enum: [security, code_smell, architecture, performance, other]
+        severity:
+          type: string
+          enum: [critical, high, medium, low, info]
+        file:
+          type: string
+        line:
+          type: integer
+          nullable: true
+        title:
+          type: string
+        description:
+          type: string
+        explanation:
+          type: string
+        oldCode:
+          type: string
+          nullable: true
+        newCode:
+          type: string
+          nullable: true
+        fixSuggestion:
+          type: string
+          nullable: true
+        confidenceScore:
+          type: number
+          nullable: true
+        impactLevel:
+          type: string
+          nullable: true
+        affectedFiles:
+          type: array
+          items:
+            type: string
+          nullable: true
+        dependencyChain:
+          type: array
+          items:
+            type: string
+          nullable: true
+        fixApplied:
+          type: boolean
+          nullable: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - reviewId
+        - category
+        - severity
+        - file
+        - title
+        - description
+        - explanation
+        - createdAt
+
+    ReviewWithIssues:
+      allOf:
+        - $ref: "#/components/schemas/Review"
+        - type: object
+          properties:
+            issues:
+              type: array
+              items:
+                $ref: "#/components/schemas/Issue"
+          required:
+            - issues
+
+    CreateReviewBody:
+      type: object
+      properties:
+        repoUrl:
+          type: string
+        repoName:
+          type: string
+        repoType:
+          type: string
+          enum: [github, git_url, zip]
+        prUrl:
+          type: string
+          nullable: true
+      required:
+        - repoType
+
+    PatchResponse:
+      type: object
+      properties:
+        patch:
+          type: string
+        filename:
+          type: string
+      required:
+        - patch
+        - filename
+
+    FixSnapshot:
+      type: object
+      properties:
+        id:
+          type: integer
+        issueId:
+          type: integer
+        reviewId:
+          type: integer
+        filePath:
+          type: string
+        originalCode:
+          type: string
+        patchContent:
+          type: string
+        status:
+          type: string
+          enum: [applied, reverted]
+        appliedAt:
+          type: string
+        revertedAt:
+          type: string
+          nullable: true
+      required:
+        - id
+        - issueId
+        - reviewId
+        - filePath
+        - originalCode
+        - patchContent
+        - status
+        - appliedAt
+
+    ApplyFixBody:
+      type: object
+      properties:
+        issueId:
+          type: integer
+      required:
+        - issueId
+
+    FixValidation:
+      type: object
+      properties:
+        syntax:
+          type: string
+          enum: [passed, failed]
+        imports:
+          type: string
+          enum: [safe, warning]
+        riskLevel:
+          type: string
+          enum: [safe, moderate, high-risk]
+        affectedFilesCount:
+          type: integer
+        message:
+          type: string
+      required:
+        - syntax
+        - imports
+        - riskLevel
+        - affectedFilesCount
+        - message
+
+    ApplyFixResponse:
+      type: object
+      properties:
+        snapshotId:
+          type: integer
+        message:
+          type: string
+        validation:
+          $ref: "#/components/schemas/FixValidation"
+        newHealthScore:
+          type: number
+          nullable: true
+      required:
+        - snapshotId
+        - message
+        - validation
+
+    RevertFixResponse:
+      type: object
+      properties:
+        message:
+          type: string
+        originalCode:
+          type: string
+          nullable: true
+        newHealthScore:
+          type: number
+          nullable: true
+      required:
+        - message
+
+    DashboardSummary:
+      type: object
+      properties:
+        totalReviews:
+          type: integer
+        completedReviews:
+          type: integer
+        avgHealthScore:
+          type: number
+        totalIssues:
+          type: integer
+        criticalIssues:
+          type: integer
+        securityIssues:
+          type: integer
+        codeSmellIssues:
+          type: integer
+      required:
+        - totalReviews
+        - completedReviews
+        - avgHealthScore
+        - totalIssues
+        - criticalIssues
+        - securityIssues
+        - codeSmellIssues
+
+    ActivityItem:
+      type: object
+      properties:
+        id:
+          type: string
+        repoName:
+          type: string
+        status:
+          type: string
+        healthScore:
+          type: number
+          nullable: true
+        issueCount:
+          type: integer
+          nullable: true
+        createdAt:
+          type: string
+      required:
+        - id
+        - repoName
+        - status
+        - createdAt
+
+    GithubRepoInfo:
+      type: object
+      properties:
+        name:
+          type: string
+        fullName:
+          type: string
+        description:
+          type: string
+          nullable: true
+        stars:
+          type: integer
+        language:
+          type: string
+          nullable: true
+        isPrivate:
+          type: boolean
+        defaultBranch:
+          type: string
+        openPRs:
+          type: integer
+      required:
+        - name
+        - fullName
+        - stars
+        - isPrivate
+        - defaultBranch
+        - openPRs

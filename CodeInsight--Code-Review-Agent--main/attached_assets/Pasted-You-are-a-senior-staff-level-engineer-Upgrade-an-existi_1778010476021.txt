@@ -1,0 +1,247 @@
+You are a senior staff-level engineer.
+
+Upgrade an existing AI code review system into a **production-grade, context-aware autonomous code review + auto-fix platform**.
+
+DO NOT simulate features. Build realistic, safe, and scalable implementations.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 CORE OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Build a system that:
+
+* Understands full repository context
+* Detects issues across codebase
+* Generates safe fixes
+* Evaluates impact on dependent files
+* Applies changes safely with rollback
+
+This is NOT a single-file analyzer.
+This is a **repository-aware intelligent system**.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ REPOSITORY-WIDE AI REVIEW ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement a review system that:
+
+* Analyzes entire repo structure
+* Detects:
+
+  * code smells
+  * architecture issues
+  * security vulnerabilities
+  * performance bottlenecks
+
+Requirements:
+
+* Use chunking + embeddings (RAG)
+* Maintain file relationships
+* Avoid analyzing files in isolation
+
+Output format:
+
+* issue_id
+* file_path
+* line_range
+* severity (critical / warning / suggestion)
+* explanation
+* confidence_score
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2️⃣ DEPENDENCY-AWARE IMPACT ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT auto-update blindly.
+
+Instead:
+
+* Build dependency graph:
+
+  * imports
+  * function usage
+  * class references
+
+For every suggested fix:
+
+* Identify impacted files
+* Classify impact:
+
+  * safe
+  * moderate
+  * high-risk
+
+Output:
+
+* affected_files[]
+* dependency_chain[]
+* risk_level
+
+This must be deterministic (not hallucinated).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3️⃣ AUTO-FIX AGENT (CONTROLLED EXECUTION)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement a fix system that:
+
+* Generates patch (diff format)
+* Validates syntax before applying
+* Runs static checks (lint/test simulation)
+
+NEVER directly overwrite files.
+
+Instead:
+
+* Create patch layer
+* Apply in sandbox copy of repo
+
+Flow:
+
+generate_fix → validate → simulate → apply
+
+If validation fails:
+→ reject fix
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4️⃣ SAFE FIXING + ROLLBACK SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement:
+
+* Version snapshot before applying fixes
+* Git-style rollback system
+
+Requirements:
+
+* Every fix = reversible
+* Store:
+
+  * previous version
+  * applied patch
+  * timestamp
+
+User must be able to:
+→ revert any change instantly
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5️⃣ CODE QUALITY SCORING ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Compute score based on:
+
+* maintainability
+* complexity
+* duplication
+* security
+
+Return:
+
+* overall_score (0–100)
+* category_scores
+* delta_after_fix
+
+Show:
+
+BEFORE vs AFTER comparison
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6️⃣ VERSION UPDATE + REVIEW BOARD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Build a review dashboard that shows:
+
+* list of issues fixed
+* files modified
+* diff preview
+* improvement metrics
+
+Must include:
+
+* timeline of changes
+* commit-style history view
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7️⃣ TASKBOX (INTELLIGENT USER INPUT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Build a taskbox system that accepts:
+
+* text prompt
+* screenshot (image)
+* error logs
+
+Pipeline:
+
+input → parse → map to repo context → identify issue → generate fix
+
+Requirements:
+
+* map user input to actual code locations
+* do NOT respond generically
+* must connect to real files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8️⃣ NON-BREAKING GUARANTEE (CRITICAL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+System must:
+
+* check cross-file consistency
+* ensure no broken imports
+* ensure no missing references
+
+Use:
+
+* static dependency validation
+* optional lightweight test simulation
+
+If risk detected:
+→ warn instead of auto-fixing
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ SYSTEM ARCHITECTURE (MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* FastAPI backend
+* Worker queue (Redis / Celery / Arq)
+* Vector DB (FAISS / pgvector)
+* WebSocket for real-time updates
+
+Pipeline:
+
+Repo → Ingestion → Embeddings → Analysis → Fix → Validation → UI
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 STRICT ENGINEERING RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+
+* fake dependency analysis
+* apply fixes without validation
+* skip rollback system
+* generate placeholder outputs
+
+MUST:
+
+* operate on real repo data
+* produce deterministic outputs
+* maintain system safety
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 FINAL EXPECTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The system must behave like:
+
+👉 a senior engineer reviewing and safely fixing a real codebase
+👉 not a chatbot
+👉 not a demo
+
+It must prioritize:
+
+* correctness
+* safety
+* traceability
+* explainability

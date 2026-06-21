@@ -1,0 +1,378 @@
+You are a senior staff-level AI platform engineer and repository intelligence architect.
+
+Your task is to integrate a production-grade **Repository-Aware AI Taskbar Assistant** into an existing AI code review SaaS platform.
+
+⚠️ CRITICAL REQUIREMENT:
+DO NOT rewrite, replace, or destabilize the current system architecture.
+
+The existing:
+
+* authentication
+* GitHub integration
+* dashboard
+* APIs
+* backend services
+* UI design
+* database
+* repository analysis flow
+
+MUST remain stable and backward-compatible.
+
+The Taskbar Assistant must be added as a modular EXTENSION layer.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 PRIMARY OBJECTIVE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Build a floating AI engineering assistant that behaves like:
+
+👉 ChatGPT + GitHub Copilot + senior software engineer
+embedded directly inside the user’s selected repository.
+
+The assistant must:
+✔ deeply understand the repository
+✔ understand architecture + dependencies
+✔ understand previous fixes and patches
+✔ analyze real files and modules
+✔ generate accurate repository-aware fixes
+✔ suggest validated patches
+✔ optionally apply fixes safely
+
+This is NOT a generic chatbot.
+
+The assistant MUST behave like:
+👉 a repository-aware engineering copilot.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 CORE TASKBAR CAPABILITIES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Taskbar must support:
+
+✔ text prompt input
+✔ voice prompt input
+✔ screenshot upload
+✔ error log upload
+✔ architecture-aware debugging
+✔ dependency-aware suggestions
+✔ repository-aware analysis
+✔ real patch generation
+✔ validation-aware fixes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📍 TASKBAR UI REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The Taskbar must:
+
+✔ float globally across the platform
+✔ remain accessible on every page
+✔ support expand/collapse animation
+✔ support fullscreen mode
+✔ maintain existing design system
+✔ use glassmorphism + purple neon glow styling
+✔ NOT interfere with current layout
+
+The taskbar UI must include:
+
+* prompt textarea
+* voice input button
+* screenshot upload button
+* error log upload
+* send button
+* AI thinking animation
+* realtime processing state
+* validation status display
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 GPT-4.1 + CLAUDE INTEGRATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Integrate:
+
+PRIMARY MODEL:
+
+* Claude Sonnet
+  Purpose:
+  ✔ deep repository reasoning
+  ✔ architecture analysis
+  ✔ debugging
+  ✔ patch generation
+
+SECONDARY MODEL:
+
+* GPT-4.1
+  Purpose:
+  ✔ structured outputs
+  ✔ orchestration
+  ✔ response formatting
+  ✔ conversational interactions
+
+IMPORTANT:
+The models MUST NOT operate blindly.
+
+Before every AI call, the system MUST retrieve:
+
+✔ relevant files
+✔ dependency graph
+✔ architecture metadata
+✔ framework/language information
+✔ recent patches
+✔ issue history
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 REPOSITORY CONTEXT ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+For every Taskbar request:
+
+1. Parse user intent
+
+Detect:
+
+* bug reports
+* architecture questions
+* optimization requests
+* security issues
+* debugging requests
+* autofix requests
+
+2. Retrieve repository context
+
+Retrieve:
+✔ relevant files
+✔ related functions/classes
+✔ dependency graph
+✔ imported modules
+✔ recent commits
+✔ affected components
+
+3. Build structured AI prompt
+
+4. Send contextualized request to GPT-4.1 / Claude
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📂 CONTEXT RETRIEVAL SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement:
+
+✔ vector embeddings
+✔ AST parsing
+✔ dependency graph analysis
+✔ repository metadata indexing
+
+The system MUST:
+
+✔ retrieve only relevant files
+✔ retrieve related functions/classes
+✔ understand architecture relationships
+✔ map user prompts to actual repository locations
+
+DO NOT:
+❌ send entire repository blindly
+❌ hallucinate file names
+❌ generate generic suggestions
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎤 MULTIMODAL INPUT SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+VOICE INPUT:
+
+* use Whisper API
+* convert speech → text
+* process through same retrieval pipeline
+
+SCREENSHOT INPUT:
+
+* OCR extraction
+* extract visible errors/logs
+* map extracted content to repository context
+
+ERROR LOGS:
+
+* parse stack traces
+* identify affected files/functions
+* map to dependency graph
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧪 TASKBAR RESPONSE REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every response MUST include:
+
+✔ root cause explanation
+✔ exact file references
+✔ line references (if available)
+✔ dependency impact
+✔ confidence score
+✔ risk level
+✔ validation status
+
+If possible:
+✔ generate unified diff patch
+
+Example:
+
+--- auth.ts
++++ auth.ts
+
+* const token = req.body.token;
+
+- const token = sanitize(req.body.token);
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧪 VALIDATION ENGINE (MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before suggesting or applying fixes:
+
+Run:
+✔ syntax validation
+✔ dependency validation
+✔ lint checks
+✔ import resolution checks
+✔ cross-file consistency checks
+✔ optional test simulation
+
+If validation fails:
+→ mark HIGH RISK
+→ require manual approval
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔁 REALTIME REPOSITORY MEMORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The assistant must stay synchronized with:
+
+✔ latest repository state
+✔ applied patches
+✔ recent fixes
+✔ updated dependency graph
+✔ dashboard analysis results
+
+When repository changes:
+→ refresh retrieval context automatically
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ TASKBAR PROCESSING FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+User Input
+(text / voice / screenshot)
+↓
+Intent Parser
+↓
+Repository Retrieval Engine
+(AST + embeddings + dependency graph)
+↓
+Relevant File Retrieval
+↓
+Prompt Builder
+↓
+Claude / GPT-4.1 Analysis
+↓
+Patch Generation
+↓
+Validation Engine
+↓
+Taskbar Response
+↓
+Optional Patch Apply
+↓
+Realtime Dashboard Update
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 AUTOFIX FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When user clicks “AutoFix”:
+
+1. Identify actual affected file
+2. Generate unified diff patch
+3. Validate patch
+4. Apply patch in sandbox repo copy
+5. Ask user approval
+6. Commit patch safely
+7. Update dashboard in realtime
+
+NEVER:
+❌ overwrite original repo blindly
+❌ bypass validation
+❌ modify unrelated files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🛡️ NON-BREAKING INTEGRATION RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+❌ rewrite current backend
+❌ break auth system
+❌ modify APIs unnecessarily
+❌ interfere with existing dashboard logic
+
+MUST:
+✔ integrate modularly
+✔ use adapters/services
+✔ preserve architecture
+✔ maintain backward compatibility
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ ENVIRONMENT SAFETY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The platform must remain stable across:
+
+✔ Replit account migrations
+✔ redeployments
+✔ environment changes
+
+Use:
+✔ environment variables
+✔ dynamic API URLs
+✔ configurable OAuth callbacks
+
+NEVER hardcode:
+❌ tokens
+❌ repo paths
+❌ callback URLs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 STRICT ENGINEERING RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+❌ generate fake analysis
+❌ hallucinate repository structure
+❌ generate dummy patches
+❌ return pseudo JSON fixes
+❌ bypass retrieval layer
+❌ bypass validation
+
+MUST:
+✔ use actual repository context
+✔ behave deterministically
+✔ prioritize correctness
+✔ preserve architecture stability
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 FINAL EXPECTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The final system must feel like:
+
+👉 an intelligent engineering brain embedded directly into the repository
+👉 capable of understanding architecture, dependencies, issues, and fixes in realtime
+
+It must combine:
+
+✔ GPT-4.1 orchestration
+✔ Claude repository reasoning
+✔ embeddings retrieval
+✔ AST analysis
+✔ dependency mapping
+✔ validation pipelines
+✔ realtime synchronization
+
+WITHOUT breaking the current SaaS platform architecture.

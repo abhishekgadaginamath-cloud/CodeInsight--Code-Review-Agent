@@ -1,0 +1,149 @@
+Build a **premium animated landing page** for an AI SaaS product:
+
+👉 App Name: **CodeInsight**
+
+IMPORTANT:
+
+* This landing page must contain ONLY animations and branding
+* DO NOT include login buttons or authentication here
+* Login must be on a separate page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 HERO SECTION (CENTER)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* Place a circular glowing animation at center
+* Inside the circle:
+
+  * Laptop illustration (provided image)
+  * Logo must be centered and slightly enlarged
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌀 SPINNER + FLOATING LOGO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* Add a glowing circular spinner around the logo
+
+* Gradient: purple (#7c3aed) → blue (#3b82f6)
+
+* Spinner rotates slowly:
+
+  rotate: 0 → 360deg
+  duration: 12–15 seconds
+  infinite linear
+
+* Logo animation:
+
+  * Floating up-down
+  * Smooth loop
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✨ FLOATING ELEMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Around the main circle, add:
+
+* small code symbols {}
+* mini UI cards
+* terminal icons
+
+Animation:
+
+* floating randomly
+* soft glow
+* different speeds
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 APP NAME (TYPEWRITER EFFECT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After 1–1.5s delay:
+
+Display:
+
+CodeInsight
+
+Animation:
+
+* Typewriter effect (letter by letter)
+* Glow effect
+* Fade + slide up
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📝 TAGLINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Below app name:
+
+"Let your mind breathe . We handle the bugs" 
+
+Style:
+
+* smaller font
+* subtle glow
+* fade in
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔘 CTA BUTTON
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Below tagline:
+
+Button text:
+👉 "Login " 
+
+Style:
+
+* glowing purple button
+* rounded
+* hover: stronger glow + scale up
+
+On click:
+→ Navigate to /login page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🌌 BACKGROUND
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* dark theme (black/navy)
+* particle animation
+* radial glow behind center
+* subtle moving gradients
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 DESIGN STYLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* Glassmorphism
+* Neon glow (purple + blue)
+* Smooth animations (Framer Motion)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ TECH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* React / Next.js
+* Tailwind CSS
+* Framer Motion
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 STRICT RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* NO login form on landing page
+* NO auth buttons here
+* DO NOT simplify animations
+* DO NOT use static UI
+* Must feel like premium AI startup
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 FINAL RESULT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Landing page should feel:
+
+👉 cinematic
+👉 futuristic
+👉 smooth and interactive
+
+Then transition to login page separately

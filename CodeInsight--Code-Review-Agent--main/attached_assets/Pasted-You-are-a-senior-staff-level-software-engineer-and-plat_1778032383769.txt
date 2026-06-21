@@ -1,0 +1,405 @@
+You are a senior staff-level software engineer and platform architect.
+
+Upgrade the existing AI code review system from a “suggestion-based demo” into a **real repository-aware autonomous review + patching platform**.
+
+⚠️ CRITICAL REQUIREMENT:
+The current system architecture, UI design, authentication flow, and existing working functionality MUST remain stable and backward-compatible.
+
+DO NOT rewrite the entire application.
+DO NOT generate fake/demo JSON outputs.
+DO NOT break existing routes, auth, or dashboard flow.
+
+The goal is to transform the current system into a REAL engineering workflow platform that operates directly on actual GitHub repositories and real source files.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 PRIMARY SYSTEM GOAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The system must:
+
+✔ analyze real repositories
+✔ understand actual architecture and dependencies
+✔ detect real issues from actual files
+✔ generate fixes in the SAME programming language/framework
+✔ apply fixes to actual repo files safely
+✔ sync changes back into the dashboard in real-time
+✔ show before vs after differences
+✔ validate fixes before applying
+
+This system must behave like:
+👉 a senior engineer reviewing and patching a real repository
+
+NOT:
+❌ a chatbot
+❌ a fake JSON generator
+❌ a static demo UI
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 CORE PROBLEM TO FIX
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The current system generates:
+
+* dummy issues
+* generic fixes
+* fake JSON outputs
+* non-context-aware suggestions
+
+The upgraded system MUST instead:
+
+✔ operate on real repository files
+✔ generate real patches
+✔ understand language/framework conventions
+✔ modify actual source code safely
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣ REAL GITHUB REPOSITORY INTEGRATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement full GitHub integration.
+
+Flow:
+
+1. User authenticates with GitHub OAuth
+2. User selects/imports repository
+3. System clones repository into sandbox workspace
+4. Repository metadata is indexed
+
+Requirements:
+
+* OAuth scopes configurable
+* Repo cloning must be temporary and isolated
+* No direct modification of original repo without authorization
+
+Store:
+
+* repo_name
+* branch
+* commit hash
+* language/framework metadata
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2️⃣ REPOSITORY UNDERSTANDING ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The system must deeply understand the repository.
+
+DO NOT analyze isolated files only.
+
+Implement:
+
+✔ repository traversal
+✔ architecture understanding
+✔ dependency relationships
+✔ module mapping
+
+Use:
+
+* AST parsing
+* static analysis
+* dependency graph generation
+
+DO NOT use LLM guesses for dependency analysis.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3️⃣ LANGUAGE + FRAMEWORK DETECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Before generating fixes:
+
+Detect:
+
+* primary language
+* framework
+* linting style
+* formatting conventions
+
+Examples:
+
+* Next.js
+* React
+* FastAPI
+* Express
+* Django
+* TypeScript
+* Python
+
+Generated fixes MUST:
+✔ stay in same language
+✔ follow existing code style
+✔ respect project architecture
+
+NEVER generate pseudo JSON fixes.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4️⃣ REAL ISSUE DETECTION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Analyze actual files and detect:
+
+* security vulnerabilities
+* performance bottlenecks
+* code smells
+* architecture problems
+* dependency issues
+* maintainability concerns
+
+Each issue MUST include:
+
+{
+"issue_id": "...",
+"file_path": "...",
+"line_range": [x, y],
+"severity": "critical/high/medium/low",
+"explanation": "...",
+"confidence_score": 0.0
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5️⃣ REAL PATCH GENERATION (CRITICAL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT return generic JSON code suggestions.
+
+Generate REAL PATCHES using unified diff format.
+
+Example:
+
+--- auth.ts
++++ auth.ts
+
+* const input = req.body.data;
+
+- const input = sanitize(req.body.data);
+
+Requirements:
+
+✔ exact file references
+✔ exact line modifications
+✔ minimal safe changes
+✔ preserve existing logic
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6️⃣ AUTOFIX SYSTEM (REAL IMPLEMENTATION)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+When user clicks “AutoFix”:
+
+1. Locate actual target file
+2. Apply patch in sandbox repo copy
+3. Validate patch
+4. Ask user authorization before modifying actual repo
+5. Apply change safely
+6. Create commit or PR
+7. Sync updated version into dashboard
+
+The system must NEVER:
+❌ overwrite blindly
+❌ bypass validation
+❌ modify unrelated files
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+7️⃣ VALIDATION ENGINE (MANDATORY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Every patch MUST go through:
+
+✔ syntax validation
+✔ import validation
+✔ dependency validation
+✔ lint checks
+✔ cross-file consistency
+✔ optional test execution
+
+If validation fails:
+→ reject patch automatically
+
+Return:
+
+{
+"validation": {
+"syntax": "passed",
+"dependencies": "safe",
+"lint": "clean",
+"cross_file": "consistent",
+"tests": "passed/not_available"
+}
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+8️⃣ DEPENDENCY-AWARE PATCHING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The system must detect impacted files.
+
+If one function changes:
+
+* update related imports/references
+* validate all dependent files
+
+Generate:
+
+{
+"affected_files": [],
+"dependency_chain": [],
+"risk_level": "SAFE/MODERATE/HIGH"
+}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+9️⃣ REALTIME DASHBOARD SYNCHRONIZATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After applying patch:
+
+Immediately update dashboard:
+
+✔ updated score
+✔ fixed issues
+✔ changed files
+✔ before vs after diff
+✔ timeline history
+
+Use WebSockets for realtime updates.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔟 CODE HEALTH SCORE ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Compute real scores based on:
+
+* issue count
+* severity
+* complexity
+* duplication
+* maintainability
+* security
+
+Display:
+
+Before Fix: X
+After Fix: Y
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣1️⃣ VERSION HISTORY + DIFF VIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Store:
+
+* previous version
+* updated version
+* patch history
+* timestamps
+
+Allow:
+
+✔ compare versions
+✔ rollback changes
+✔ review patch history
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣2️⃣ SAFETY + SANDBOX RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ALL fixes must occur in isolated workspace first.
+
+Example:
+
+/tmp/reviews/{review_id}/repo_copy
+
+NEVER directly modify:
+
+* original repository
+* production branch
+
+Use:
+
+* temporary branches
+* sandbox patching
+* approval flow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣3️⃣ REAL-TIME PROCESSING FLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pipeline:
+
+GitHub Repo
+↓
+Clone Repository
+↓
+AST Parsing
+↓
+Dependency Graph
+↓
+Embeddings + Retrieval
+↓
+Issue Detection
+↓
+Patch Generation
+↓
+Validation
+↓
+User Approval
+↓
+Patch Apply
+↓
+Commit / PR
+↓
+Realtime Dashboard Update
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1️⃣4️⃣ UI REQUIREMENTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dashboard must display:
+
+✔ real issues only
+✔ exact file names
+✔ actual line numbers
+✔ diff preview
+✔ confidence score
+✔ affected files
+✔ validation status
+✔ rollback button
+✔ patch approval button
+
+NO fake/demo placeholders allowed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 STRICT ENGINEERING RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+
+❌ generate fake issues
+❌ generate fake patches
+❌ return JSON pseudo-code fixes
+❌ hallucinate dependencies
+❌ overwrite files blindly
+❌ break auth or current architecture
+❌ remove existing UI styling/design
+
+MUST:
+
+✔ use actual repository data
+✔ generate deterministic outputs
+✔ preserve existing architecture
+✔ maintain environment compatibility
+✔ work safely across Replit environments
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 FINAL EXPECTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The final system must feel like:
+
+👉 GitHub Copilot + CodeRabbit + automated patch engine
+👉 not a chatbot
+
+It must:
+✔ analyze real repositories
+✔ generate real validated fixes
+✔ sync changes live
+✔ safely patch codebases
+✔ preserve architecture integrity
+✔ maintain developer trust

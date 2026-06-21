@@ -1,0 +1,292 @@
+Build a **production-ready SaaS web application** called:
+
+👉 **Code Insight — Context-Aware AI Code Review Agent**
+
+This must be a **fully working system**, not a UI mock.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 CORE PRODUCT GOAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Users should be able to:
+
+1. Login using real OAuth
+2. Input a GitHub repo / PR / Git URL OR upload ZIP
+3. See real-time analysis progress
+4. View AI-generated code review
+5. Apply suggested fixes (diff patches)
+
+The system must work end-to-end:
+👉 Login → Submit repo → Analyze → Stream results → Show fixes
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧭 COMPLETE USER FLOW (STRICT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. LANDING PAGE (Premium UI)
+
+* Dark futuristic theme (black + purple + blue glow)
+
+* Center:
+
+  * Floating neon laptop illustration (provided asset)
+  * Smooth up-down floating animation
+  * Rotating glow ring behind it
+
+* Below:
+  Title: “Code Insight”
+  Subtitle: “AI-powered Code Review Agent”
+
+* Use gradient glowing text
+
+* Add floating particles in background
+
+* Add hover glow effects
+
+Below center:
+
+* Floating glassmorphism login card
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔐 AUTHENTICATION (REAL ONLY)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Implement REAL authentication using NextAuth:
+
+Providers:
+
+* GitHub (PRIMARY)
+* Google
+
+Requirements:
+
+* Store GitHub access token securely
+* Use token for private repo access
+* No fake login allowed
+
+After login → redirect to dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 DASHBOARD PAGE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Show:
+
+* List of previous reviews
+* Repo name
+* Status (Processing / Completed)
+* Health score
+
+Include:
+
+* “New Analysis” button
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📥 SOURCE SELECTION (/analyze)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3 tabs:
+
+1. GitHub / GitLab / Bitbucket
+
+   * Input URL
+   * Auto-detect repo
+   * Show metadata (name, stars, language)
+   * Option: “Review PR (diff-aware)”
+
+2. Public Git URL
+
+   * Accept .git links
+
+3. ZIP Upload
+
+   * Drag-drop
+   * Upload progress bar
+
+Submit → go to processing page
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ PROCESSING SCREEN (REAL-TIME)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Must NOT be fake loading.
+
+Show live steps using WebSocket:
+
+✔ Cloning repository
+✔ Parsing files
+✔ Detecting languages
+✔ Analyzing diff
+✔ Running AI review
+✔ Generating fixes
+
+Display:
+
+* Progress bar
+* Current step text
+* File count (dynamic)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🧠 BACKEND (STRICT REQUIREMENTS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Use FastAPI.
+
+Use ingestion system EXACTLY as provided:
+
+* GitHub ingestion
+* Git URL ingestion
+* ZIP ingestion
+
+Use RepoContext as unified structure.
+
+Queue system:
+
+* Redis + worker
+
+WebSocket:
+
+* /ws/reviews/{review_id}
+* Stream real-time progress updates
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🤖 AI ANALYSIS ENGINE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Agents:
+
+* Security agent
+* Code smell agent
+* Architecture agent
+* Patch generator
+
+Logic:
+
+* If PR → analyze diff_files
+* Else → analyze full repo
+
+Each issue must include:
+
+* file
+* line
+* severity
+* issue description
+* explanation
+* fix suggestion
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🖥️ ANALYSIS DASHBOARD (/reviews/[id])
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Layout:
+
+LEFT:
+
+* File tree
+
+CENTER:
+
+* Code viewer with diff highlighting
+
+RIGHT:
+
+* Issues panel
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔍 DETAILED ISSUE VIEW (CRITICAL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+On clicking issue:
+
+Show:
+
+❌ Problem
+📍 File + line
+🔁 Old vs New code (diff format)
+💡 Explanation
+🔧 “Apply Fix” button
+
+Example:
+
+* const password = req.body.password
+
+- const password = sanitize(req.body.password)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 PATCH SYSTEM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Allow:
+
+* Copy fix
+* Download patch
+* Apply locally
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎨 UI DESIGN (STRICT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+* Dark theme only
+* Glassmorphism
+* Neon glow (purple/blue)
+* Smooth animations (Framer Motion)
+
+Effects:
+
+* Floating elements
+* Glow hover
+* Particle background
+* Blur cards
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚙️ TECH STACK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Frontend:
+
+* Next.js 14
+* Tailwind CSS
+* Framer Motion
+
+Backend:
+
+* FastAPI
+* PostgreSQL + pgvector
+* Redis
+
+AI:
+
+* Claude / OpenAI
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚨 STRICT RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT:
+
+* Generate dummy data
+* Create static UI
+* Fake loading states
+* Skip backend integration
+
+MUST:
+
+* Connect frontend to backend APIs
+* Use real GitHub token
+* Stream real analysis progress
+* Show real issues from backend
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 OUTPUT EXPECTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Generate:
+
+* Full working backend
+* Full working frontend
+* Auth system integrated
+* Real-time pipeline connected
+* Production-level UI
+
+This must feel like:
+👉 A real startup SaaS product (not a college project)
